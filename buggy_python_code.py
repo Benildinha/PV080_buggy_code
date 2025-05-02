@@ -24,8 +24,25 @@ def print_nametag(format_string, person):
 
 
 def fetch_website(urllib_version, url):
+    urlopen_map = {
+        '2': urllib2.urlopen,
+        '3': urllib3.poolManager().request
+    }
+
+    if urllib_version not in urlopen_map:
+        raise ValueError("Unsupported urllib version")
+
+    try:
+        if version == '2':
+            response = urlopen_map[version](url)
+        else:
+            response = urlopen_map[version]('GET', url)
+        print(response)
+    except Expection as e:
+        print("Exception:", e)
+
     # Import the requested version (2 or 3) of urllib
-    exec(f"import urllib{urllib_version} as urllib", globals())
+    # exec(f"import urllib{urllib_version} as urllib", globals())
     # Fetch and print the requested URL
  
     try: 
